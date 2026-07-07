@@ -10,18 +10,22 @@ $stringify = function($j) {
     return json_encode($j);
 };
 
-$stringifyWithIndent = function($i) use (&$stringifyWithIndent) {
-    if (func_num_args() < 1) {
+$stringifyWithIndent = function($i = null, $j = null) use (&$stringifyWithIndent) {
+    if (func_num_args() < 2) {
         $__args = func_get_args();
         return function(...$more) use ($__args, &$stringifyWithIndent) {
             return $stringifyWithIndent(...array_merge($__args, $more));
         };
     }
-    return function($j) use ($i) {
-        // We can't easily set arbitrary indentation in PHP json_encode without rewriting it,
-        // JSON_PRETTY_PRINT uses 4 spaces.
-        return json_encode($j, JSON_PRETTY_PRINT);
-    };
+    // We can't easily set arbitrary indentation in PHP json_encode without rewriting it,
+    // JSON_PRETTY_PRINT uses 4 spaces.
+    $encoded = json_encode($j, JSON_PRETTY_PRINT);
+    if ($encoded === false) {
+        $err = "json_encode failed: " . json_last_error_msg() . "\n";
+        file_put_contents('php://stderr', $err);
+        return "";
+    }
+    return $encoded;
 };
 
 $_caseJson = function($isNull, $isBool, $isNum, $isStr, $isArr, $isObj, $j = null) use (&$_caseJson) {
