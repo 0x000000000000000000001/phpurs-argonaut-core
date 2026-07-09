@@ -35,7 +35,7 @@ $_caseJson = function($isNull, $isBool, $isNum, $isStr, $isArr, $isObj, $j = nul
             return $_caseJson(...array_merge($__args, $more));
         };
     }
-    if ($j === null) return $isNull();
+    if ($j === null) return $isNull(1);
     else if (is_bool($j)) return $isBool($j);
     else if (is_int($j) || is_float($j)) return $isNum($j);
     else if (is_string($j)) return $isStr($j);
