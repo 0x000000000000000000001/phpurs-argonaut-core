@@ -4,12 +4,12 @@ $id = function($x) {
     return $x;
 };
 
-class Phpurs_JsonNull implements \JsonSerializable {
+class JsonNull implements \JsonSerializable {
     #[\ReturnTypeWillChange]
     public function jsonSerialize() { return null; }
 }
 
-$jsonNull = new Phpurs_JsonNull();
+$jsonNull = new JsonNull();
 
 $stringify = function($j) {
     return \json_encode($j);
@@ -40,7 +40,7 @@ $_caseJson = function($isNull, $isBool, $isNum, $isStr, $isArr, $isObj, $j = nul
             return $_caseJson(...\array_merge($__args, $more));
         };
     }
-    if ($j === null || $j instanceof Phpurs_JsonNull) return $isNull(1);
+    if ($j === null || $j instanceof JsonNull) return $isNull(1);
     else if (\is_bool($j)) return $isBool($j);
     else if (\is_int($j) || \is_float($j)) return $isNum($j);
     else if (\is_string($j)) return $isStr($j);
@@ -69,22 +69,22 @@ $_compare = function($EQ, $GT, $LT, $a = null, $b = null) use (&$_compare) {
         return \array_keys($v) === \range(0, \count($v) - 1);
     };
     
-    if ($a === null || $a instanceof Phpurs_JsonNull) {
-        if ($b === null || $b instanceof Phpurs_JsonNull) return $EQ;
+    if ($a === null || $a instanceof JsonNull) {
+        if ($b === null || $b instanceof JsonNull) return $EQ;
         else return $LT;
     } else if (\is_bool($a)) {
         if (\is_bool($b)) {
             if ($a === $b) return $EQ;
             else if ($a === false) return $LT;
             else return $GT;
-        } else if ($b === null || $b instanceof Phpurs_JsonNull) return $GT;
+        } else if ($b === null || $b instanceof JsonNull) return $GT;
         else return $LT;
     } else if (\is_int($a) || \is_float($a)) {
         if (\is_int($b) || \is_float($b)) {
             if ($a === $b) return $EQ;
             else if ($a < $b) return $LT;
             else return $GT;
-        } else if ($b === null || $b instanceof Phpurs_JsonNull) return $GT;
+        } else if ($b === null || $b instanceof JsonNull) return $GT;
         else if (\is_bool($b)) return $GT;
         else return $LT;
     } else if (\is_string($a)) {
@@ -92,7 +92,7 @@ $_compare = function($EQ, $GT, $LT, $a = null, $b = null) use (&$_compare) {
             if ($a === $b) return $EQ;
             else if ($a < $b) return $LT;
             else return $GT;
-        } else if ($b === null || $b instanceof Phpurs_JsonNull) return $GT;
+        } else if ($b === null || $b instanceof JsonNull) return $GT;
         else if (\is_bool($b)) return $GT;
         else if (\is_int($b) || \is_float($b)) return $GT;
         else return $LT;
@@ -108,13 +108,13 @@ $_compare = function($EQ, $GT, $LT, $a = null, $b = null) use (&$_compare) {
             if ($lenA === $lenB) return $EQ;
             else if ($lenA < $lenB) return $LT;
             else return $GT;
-        } else if ($b === null || $b instanceof Phpurs_JsonNull) return $GT;
+        } else if ($b === null || $b instanceof JsonNull) return $GT;
         else if (\is_bool($b)) return $GT;
         else if (\is_int($b) || \is_float($b)) return $GT;
         else if (\is_string($b)) return $GT;
         else return $LT;
     } else {
-        if ($b === null || $b instanceof Phpurs_JsonNull) return $GT;
+        if ($b === null || $b instanceof JsonNull) return $GT;
         else if (\is_bool($b)) return $GT;
         else if (\is_int($b) || \is_float($b)) return $GT;
         else if (\is_string($b)) return $GT;
