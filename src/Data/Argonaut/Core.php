@@ -44,7 +44,7 @@ $_caseJson = function($isNull, $isBool, $isNum, $isStr, $isArr, $isObj, $j = nul
     else if (\is_bool($j)) return $isBool($j);
     else if (\is_int($j) || \is_float($j)) return $isNum($j);
     else if (\is_string($j)) return $isStr($j);
-    else if (\is_array($j) && \array_keys($j) === \range(0, \count($j) - 1)) return $isArr($j);
+    else if (\is_array($j) && (empty($j) || \array_keys($j) === \range(0, \count($j) - 1))) return $isArr($j);
     // In PHP, objects from JSON decode are stdClass, or arrays depending on options.
     // If it's an array but not sequential, it's an object in JS.
     else if (\is_array($j) || \is_object($j)) {
@@ -64,7 +64,9 @@ $_compare = function($EQ, $GT, $LT, $a = null, $b = null) use (&$_compare) {
     }
     
     $isArray = function($v) {
-        return \is_array($v) && \array_keys($v) === \range(0, \count($v) - 1);
+        if (!\is_array($v)) return false;
+        if (empty($v)) return true;
+        return \array_keys($v) === \range(0, \count($v) - 1);
     };
     
     if ($a === null || $a instanceof Phpurs_JsonNull) {
