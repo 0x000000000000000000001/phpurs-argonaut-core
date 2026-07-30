@@ -15,13 +15,7 @@ $stringify = function($j) {
     return \json_encode($j);
 };
 
-$stringifyWithIndent = function($i = null, $j = null) use (&$stringifyWithIndent) {
-    if (\func_num_args() < 2) {
-        $__args = \func_get_args();
-        return function(...$more) use ($__args, &$stringifyWithIndent) {
-            return $stringifyWithIndent(...\array_merge($__args, $more));
-        };
-    }
+$stringifyWithIndent = function($i, $j) use (&$stringifyWithIndent) {
     // We can't easily set arbitrary indentation in PHP json_encode without rewriting it,
     // JSON_PRETTY_PRINT uses 4 spaces.
     $encoded = \json_encode($j, JSON_PRETTY_PRINT);
@@ -33,13 +27,7 @@ $stringifyWithIndent = function($i = null, $j = null) use (&$stringifyWithIndent
     return $encoded;
 };
 
-$_caseJson = function($isNull, $isBool, $isNum, $isStr, $isArr, $isObj, $j = null) use (&$_caseJson) {
-    if (\func_num_args() < 7) {
-        $__args = \func_get_args();
-        return function(...$more) use ($__args, &$_caseJson) {
-            return $_caseJson(...\array_merge($__args, $more));
-        };
-    }
+$_caseJson = function($isNull, $isBool, $isNum, $isStr, $isArr, $isObj, $j) use (&$_caseJson) {
     if ($j === null || $j instanceof JsonNull) return $isNull(1);
     else if (\is_bool($j)) return $isBool($j);
     else if (\is_int($j) || \is_float($j)) return $isNum($j);
@@ -55,13 +43,7 @@ $_caseJson = function($isNull, $isBool, $isNum, $isStr, $isArr, $isObj, $j = nul
     else return $isObj((object)$j);
 };
 
-$_compare = function($EQ, $GT, $LT, $a = null, $b = null) use (&$_compare) {
-    if (\func_num_args() < 5) {
-        $__args = \func_get_args();
-        return function(...$more) use ($__args, &$_compare) {
-            return $_compare(...\array_merge($__args, $more));
-        };
-    }
+$_compare = function($EQ, $GT, $LT, $a, $b) use (&$_compare) {
     
     $isArray = function($v) {
         if (!\is_array($v)) return false;
