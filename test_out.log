@@ -1,0 +1,11 @@
+=== Building project with spago ===
+Reading Spago workspace configuration...
+
+✓ Selecting package to build: argonaut-core
+
+
+✘ Some packages in your local tree overlap with ones you have declared in your workspace configuration.
+To resolve this error, rename these packages declared in `extra_packages` to a different name:
+  - argonaut-core
+
+Spago build failed
