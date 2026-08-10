@@ -30,6 +30,7 @@ package:
       - prelude
       - refs
       - tailrec
+      - quickcheck
 
 workspace:
   packageSet:
@@ -37,8 +38,6 @@ workspace:
   extraPackages:
     aff:
       path: "../phpurs-aff"
-    argonaut-core:
-      path: "../phpurs-argonaut-core"
     arrays:
       path: "../phpurs-arrays"
     assert:
@@ -103,6 +102,8 @@ workspace:
       path: "../phpurs-partial"
     prelude:
       path: "../phpurs-prelude"
+    quickcheck:
+      path: "../phpurs-quickcheck"
     random:
       path: "../phpurs-random"
     record:
